@@ -1,0 +1,130 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #1a1a1a;
+  color: white;
+  text-align: center;
+  margin: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.roulette-table {
+  margin: auto;
+  border-collapse: collapse;
+}
+
+.bet-spot {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  font-weight: bold;
+  color: white;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+
+.zero {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+.black {
+  background-color: black;
+}
+
+.bet-spot.winner {
+  background-color: gold !important;
+  box-shadow: 0 0 10px 3px gold;
+}
+#bonus-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  color: gold;
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 100vh;
+  z-index: 10;
+}
+
+.bonus-glow {
+  box-shadow: 0 0 30px 10px gold;
+}
+
+.bet-spot.bonus {
+  background-color: purple;
+  color: white;
+  font-weight: bold;
+  border: 3px solid gold;
+}
+.chip-display {
+  background-color: yellow;
+  color: black;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.winner {
+  box-shadow: 0 0 10px 3px gold;
+  background-color: gold !important;
+}
+
+.chip-display {
+  background-color: yellow;
+  color: black;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.winner {
+  box-shadow: 0 0 10px 3px gold;
+  background-color: gold !important;
+}
+
+.chip-display {
+  background-color: yellow;
+  color: black;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.roulette-container {
+  text-align: center;
+}
+
+#roulette-wheel {
+  display: block;
+  margin: 0 auto;
+}
