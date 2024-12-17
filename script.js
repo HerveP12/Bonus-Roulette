@@ -762,7 +762,7 @@ rulesContainer.style.marginTop = "10px";
 rulesContainer.innerHTML = `
   <h3>Game Rules</h3>
   <p>
-   The odds prior to the bonus round are skewed in order to enter the bonus round. Within the bonus rounds, the odds are true to tradtional roulette <br>
+   The odds prior to the bonus round are skewed in order to enter the bonus round. Within the bonus rounds, the odds are true to tradtional roulette. For demo purposes, continue to place a $1 bet on the bonus spot until the bonus round is triggered <br>
     - Place your bets on the layout.<br>
     - Press "Spin" to spin the wheel.<br>
     - If you placed a bonus bet and the result is green (0 or 00), you enter the bonus round.<br>
