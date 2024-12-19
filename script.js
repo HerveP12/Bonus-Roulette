@@ -770,7 +770,7 @@ rulesContainer.innerHTML = `
     - Place your bets on the layout.<br>
     - Press "Spin" to spin the wheel.<br>
     - If you placed a bonus bet and the result is green (0 or 00), you enter the bonus round.<br>
-    - In the bonus round, follow the instructions for each step to advance.<br>
+    - In the bonus round, follow the instructions for each step to advance. (The first selection you make will register as your choice for the bonus round stage) <br>
     - Click "Show Rules" to toggle these rules at any time.
   </p>
   <h3>Round Payouts</h3>
