@@ -523,20 +523,13 @@ function isWinningBet(bet, winningNumber) {
 }
 
 function checkForBonusTrigger(winningNumber) {
-  if (!inBonusRound) {
-    // Check if the bonus round should be triggered
-    if (
-      (winningNumber === "0" || winningNumber === "00") &&
-      bets["bonus"] >= 1
-    ) {
-      startBonusRound();
-    } else {
-      // Reset the bonus bet if the trigger is not hit
-      resetBonusBetSpot(); // Call the helper function to reset the bonus bet spot
-      console.log("Bonus bet reset as bonus round was not triggered.");
-    }
-  } else {
-    // Bonus round logic for ongoing rounds
+  if (
+    !inBonusRound &&
+    (winningNumber === "0" || winningNumber === "00") &&
+    bets["bonus"] >= 1
+  ) {
+    startBonusRound();
+  } else if (inBonusRound) {
     const didWin = verifyBonusChoice(winningNumber);
 
     if (!didWin) {
@@ -673,30 +666,11 @@ function endBonusRound(success) {
   waitingForPlayerChoice = false;
 
   // Clear bonus bet
-  resetBonusBetSpot();
+  bets["bonus"] = 0;
 
   updateBonusMessage(false);
   addGlowingEffect(false);
   updateBalanceDisplay();
-}
-function resetBonusBetSpot() {
-  // Clear the bonus bet data
-  bets["bonus"] = 0;
-
-  // Reset the bonus bet spot UI
-  const bonusBetSpot = document.querySelector(".bet-spot.bonus");
-  if (bonusBetSpot) {
-    // Remove chip display if it exists
-    let chipDisplay = bonusBetSpot.querySelector(".chip-display");
-    if (chipDisplay) {
-      chipDisplay.remove(); // Remove any displayed chips
-    }
-
-    // Ensure the 'winner' class is removed
-    bonusBetSpot.classList.remove("winner");
-  }
-
-  console.log("Bonus bet spot has been reset.");
 }
 
 // Add glowing effect during bonus
@@ -713,11 +687,8 @@ function resolveBets(winningNumber) {
 
   for (let betKey in bets) {
     let amount = bets[betKey];
+    if (betKey === "bonus") continue; // Bonus payout handled separately
 
-    // Bonus bet resolution deferred to bonus-specific logic
-    if (betKey === "bonus") continue;
-
-    // Check for winning bets and payout
     if (isWinningBet(betKey, winningNumber)) {
       let payoutMultiplier = getPayoutMultiplier(betKey);
       let payout = amount * payoutMultiplier;
@@ -727,8 +698,6 @@ function resolveBets(winningNumber) {
       balance += payout;
     }
   }
-
-  // Update balance display after all non-bonus bet resolutions
   updateBalanceDisplay();
 }
 
@@ -759,22 +728,11 @@ function getPayoutMultiplier(betKey) {
 
 // Clear bets after resolution and checking bonus
 function clearBets() {
-  const deferredBets = {}; // Keep bonus bets active
-  for (let betKey in bets) {
-    if (betKey === "bonus") {
-      deferredBets[betKey] = bets[betKey];
-    }
-  }
-  bets = deferredBets;
-
-  // Clear displayed chips for non-bonus bets
+  bets = {};
   betSpots.forEach((spot) => {
-    const betKey = spot.dataset.number || spot.dataset.bet;
-    if (betKey !== "bonus") {
-      let chipDisplay = spot.querySelector(".chip-display");
-      if (chipDisplay) {
-        chipDisplay.remove();
-      }
+    let chipDisplay = spot.querySelector(".chip-display");
+    if (chipDisplay) {
+      chipDisplay.remove();
     }
     spot.classList.remove("winner");
   });
@@ -801,16 +759,29 @@ rulesContainer.style.fontSize = "14px";
 rulesContainer.style.background = "rgba(0,0,0,0.7)";
 rulesContainer.style.padding = "10px";
 rulesContainer.style.marginTop = "10px";
+rulesContainer.style.textAlign = "left"; // Ensure text alignment is left
 rulesContainer.innerHTML = `
   <h3>Game Rules</h3>
   <p>
-   The odds prior to the bonus round are skewed in order to enter the bonus round. Within the bonus rounds, the odds are true to tradtional roulette <br>
+    The odds prior to the bonus round are skewed in order to enter the bonus round. Within the bonus rounds, the odds are true to traditional roulette.<br> 
+    </p>
+    <h3>Getting Started</h3>
+  
     - Place your bets on the layout.<br>
     - Press "Spin" to spin the wheel.<br>
     - If you placed a bonus bet and the result is green (0 or 00), you enter the bonus round.<br>
     - In the bonus round, follow the instructions for each step to advance.<br>
     - Click "Show Rules" to toggle these rules at any time.
   </p>
+  <h3>Round Payouts</h3>
+  <ul>
+    <li>Bonus Started: $10</li>
+    <li>Round 1: $15</li>
+    <li>Round 2: $25</li>
+    <li>Round 3: $50</li>
+    <li>Round 4: $200</li>
+    <li>Round 5: Jackpot</li>
+  </ul>
 `;
 rouletteContainer.appendChild(rulesContainer);
 
